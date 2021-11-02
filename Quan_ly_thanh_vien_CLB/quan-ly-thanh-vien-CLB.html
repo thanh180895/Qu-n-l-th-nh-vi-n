@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            
+            background-color: rgb(232, 241, 243);
+        }
+
+        .kq {
+            border-radius: 10px;          
+            margin-bottom: 8px;
+            width: 400px;
+            height: 25px;
+        }
+
+        .nn {
+            border-radius: 20px;
+            width: 100px;
+            height: 25px;
+        }
+
+        .mk {
+            border-radius: 10px;
+            margin-bottom: 8px;
+            width: 350px;
+            height: 25px;
+        }
+
+        .kk {
+            border-radius: 20px;
+            width: 120px;   
+            height: 25px;
+        }
+
+        .form1 {
+            color: red
+        }
+      
+      
+    </style>
+</head>
+
+<body>
+
+    <div class="form"></div>
+    <form method="GET" action="casestudy.html" style="border-radius: 20px;">
+        <table align="center" border="0" width="600 px" style="background-color:rgb(235, 219, 182);" >
+            <tr style="background-color: rgb(235, 182, 114);">
+                <th colspan="2">
+                    <h2 style="color: white">ĐĂNG KÝ THÀNH VIÊN CLB</h2>
+
+                </th>
+            </tr>
+            <tr>
+                <td align="center"><strong>Họ</strong></td>
+                <td><input type=" text" name="ho" id="ho" class="kq"><br>
+                    <div class="form1" id="ho1"></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center"><strong>Tên</strong></td>
+                <td><input type=" text" name="ten" id="ten" class="kq"><br>
+                    <div class="form1" id="ten1"></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center"><strong>Email</strong></td>
+                <td><input type=" text" name="email" id="email" class="kq">
+                    <div class="form1" id="email1"></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center"><strong>Mật khẩu</strong></td>
+                <td><input type="password" name="mat_khau" id="mat_khau" class="mk">
+                    <div class="form1" id="mat_khau1"></div>
+                </td>
+            </tr>
+            <tr>
+                <td align="center"><strong>Ngày sinh</strong></td>
+                <td> <select id="ngay_sinh" class="nn"></select>
+                    <script>
+                        let ngay_sinh_html = '';
+                        for (let i = 1; i <= 31; i++) {
+                            ngay_sinh_html += '<option value="' + i + '"> ' + i + '</option>';
+                        }
+
+                        document.getElementById('ngay_sinh').innerHTML = ngay_sinh_html;
+                    </script>
+                    <select id="thang_sinh" class="kk"></select>
+                    <script>
+                        let thang_sinh_html = '';
+                        for (let i = 1; i <= 12; i++) {
+                            thang_sinh_html += '<option value="' + i + '"> ' + i + '</option>';
+                        }
+
+                        document.getElementById('thang_sinh').innerHTML = thang_sinh_html;
+                    </script>
+                    <select id="nam_sinh" class="kk"></select>
+                    <script>
+                        let nam_sinh_html = '';
+                        for (let i = 1990; i <= 2010; i++) {
+                            nam_sinh_html += '<option value="' + i + '"> ' + i + '</option>';
+                        }
+
+                        document.getElementById('nam_sinh').innerHTML = nam_sinh_html;
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <td align="center"><strong>Giới tính</strong></td>
+                <td><input type="radio" id="gioi_tinh1" name="a" checked> Nam <input name="a" type="radio"
+                        id="gioi_tinh"> Nữ</td>
+            </tr>
+            <tr>
+                <td> </td>
+                <td>
+                    <input id="dang_ky" type="button" value="ĐĂNG KÝ" class="nn" onclick="nhap()"
+                        style="background-color: rgb(91, 206, 106);">
+                    <input id="cap_nhat" type="button" value="CẬP NHẬT" class="nn" onclick="luu()"
+                        style="background-color: rgb(91, 206, 106);display:none;">
+                </td>
+            </tr>
+            <br>
+        </table><br><br>
+
+
+        <table align="center" border="0" width="700px" style="background-color: rgb(189, 203, 212) ;">
+            <tr style="background-color: rgb(146, 146, 219);">
+                <th colspan="7">
+                    <h2 style="color: white">DANH SÁCH THÀNH VIÊN ĐÃ ĐĂNG KÝ </h2>
+
+            </tr>
+            <tr align="center">
+                <td><Strong>STT</Strong></td>
+                <td><Strong>Họ và tên</Strong></td>
+                <td><Strong>Ngày sinh</Strong></td>
+                <td><Strong>Giới tính</Strong></td>
+                <td><Strong>Email</Strong></td>
+                <td><Strong>Password</Strong></td>
+                <td><Strong>Action</Strong></td>
+            </tr>
+            <tbody id="display"></tbody>
+        </table>
+    </form>
+
+    <script>
+        class User {
+            constructor(ho, ten, email, password, ngaysinh, gioitinh) {
+                this.ho = ho;
+                this.ten = ten;
+                this.email = email;                 
+                this.password = password;
+                this.ngaysinh = ngaysinh;
+                this.gioitinh = gioitinh;
+            }
+        }
+        let mangto = [];
+        let chiso ='';
+
+        function nhap() {
+
+            let a = document.getElementById('ho').value;
+            let b = document.getElementById('ten').value;
+            let c = document.getElementById('email').value;
+            let d = document.getElementById('mat_khau').value;
+
+            let check1 = false;
+            let check2 = false;
+            let check3 = false;
+            let check4 = false;
+            let ho;
+            let ten;
+            let email;
+            let pass;
+            let gioitinh;
+
+            document.getElementById('ho1').innerHTML = "";
+            document.getElementById('ten1').innerHTML = "";
+            document.getElementById('email1').innerHTML = "";
+            document.getElementById('mat_khau1').innerHTML = "";
+
+            if (a) {
+                ho = a;
+                check1 = true;
+                document.getElementById('ho').value = '';
+            } else {
+                document.getElementById('ho1').innerHTML = "vui lòng nhập họ"
+            }
+            if (b) {
+                ten = b;
+                check2 = true;
+                document.getElementById('ten').value = '';
+
+            } else {
+                document.getElementById('ten1').innerHTML = "vui lòng nhập tên"
+            }
+            if (c) {
+                email = c;
+                check3 = true;
+                document.getElementById('email').value = '';
+
+            } else {
+                document.getElementById('email1').innerHTML = "vui lòng nhập email"
+            }
+            if (d) {
+                pass = d;
+                check4 = true;
+                document.getElementById('mat_khau').value = '';
+
+            } else {
+                document.getElementById('mat_khau1').innerHTML = "vui lòng nhập password"
+
+            }
+            let n1 = document.getElementById('ngay_sinh').value;
+            let n2 = document.getElementById('thang_sinh').value;
+            let n3 = document.getElementById('nam_sinh').value;
+            let ngaysinh = n1 + '/' + n2 + '/' + n3;
+
+            let gt = document.getElementById('gioi_tinh1');
+            if (gt.checked) {
+                gioitinh = 'Nam';
+            } else {
+                gioitinh = 'Nữ';
+            }
+
+            if (check1 == true && check2 == true && check3 == true && check4 == true) {
+                mangto.push(new User(ho, ten, email, pass, ngaysinh, gioitinh));
+            }
+
+            hienthi()
+
+        }
+        function hienthi() {
+            let temp = "";
+            for (let i = 0; i < mangto.length; i++) {
+                temp += '<tr><td>' + `${i + 1}` + '</td><td>' + mangto[i].ho + ' ' + mangto[i].ten + '</td><td>' + mangto[i].ngaysinh + '</td><td>' + mangto[i].gioitinh + '</td><td>' + mangto[i].email + '</td><td>' + mangto[i].password
+                    + `</td><td><input style="background-color:red" value="Delete" type="button" onclick="Delete(${i})"><input style="background-color:yellow" value="Edit" type="button" onclick="edit(${i})"></tr>`;
+
+            }
+            document.getElementById('display').innerHTML = temp;
+        }
+        function Delete(i) {
+            let xac_nhan = confirm('Bạn có chắc chắn xóa hay không ?');
+            if (xac_nhan == true) {
+                mangto.splice(i, 1);
+
+                hienthi();
+            }
+        }
+        function edit(i) {
+            chiso = i ;
+            document.getElementById('ho').value = mangto[i].ho;
+            document.getElementById('ten').value = mangto[i].ten;
+            document.getElementById('email').value = mangto[i].email;
+            document.getElementById('mat_khau').value = mangto[i].password;
+            let dang_ky = document.getElementById('dang_ky');
+            let cap_nhat = document.getElementById('cap_nhat');
+          
+            dang_ky.style.display = 'none';
+            cap_nhat.style.display = 'block';
+        }
+
+        function luu() {
+            let a = document.getElementById('ho').value;
+            let b = document.getElementById('ten').value;
+            let c = document.getElementById('email').value;
+            let d = document.getElementById('mat_khau').value;
+
+            mangto[chiso].ho = a;
+            mangto[chiso].ten = b;
+            mangto[chiso].email = c;
+            mangto[chiso].password = d;
+
+            document.getElementById('ho').value = "";
+            document.getElementById('ten').value = "";
+            document.getElementById('email').value = "";
+            document.getElementById('mat_khau').value= "";
+
+            dang_ky.style.display = 'block';
+            cap_nhat.style.display = 'none';
+
+            hienthi();
+
+        }
+    </script>
+
+</body>
+
+</html>
